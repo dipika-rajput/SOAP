@@ -1,0 +1,9 @@
+<apex:page >
+  <apex:form >
+  <apex:commandButton value="Refresh" action="{!save}" rerender="theOutputpanel"/>
+  <apex:outputPanel id="theOutputpanel">
+  <apex:outputText value="refresh this part only">
+   </apex:outputText>
+  </apex:outputPanel>
+  </apex:form>
+</apex:page>

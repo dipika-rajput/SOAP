@@ -1,0 +1,111 @@
+<apex:page controller="UTGClassInformationController">
+	<script>
+		function retrieveClassInformation() {
+			alert('Retrieved');
+		}
+	</script>
+
+	<apex:form id="Frm">
+		<apex:pageMessages />
+
+		<apex:pageBlock id="AutomaticTestClass">
+			<apex:pageBlockSection >
+				<apex:pageBlockSectionItem >
+					<apex:outputpanel id="member">
+						<apex:outputLabel value="Select Apex Class Member "
+							for="ApexMember"></apex:outputLabel>
+						<apex:selectList id="ApexMember" value="{!selectedApeClassMember}"
+							size="1">
+							<apex:selectOptions value="{!options}" />
+							<apex:actionSupport event="onchange" status="Processing"
+								reRender="AutomaticTestClass">
+							</apex:actionSupport>
+
+						</apex:selectList>
+						<apex:actionStatus id="Processing"
+							stopText="" />
+					</apex:outputpanel>
+				</apex:pageBlockSectionItem>
+				<br />
+				<apex:pageBlockSectionItem id="selectedApeClassMember">
+					<apex:outputpanel id="apexPage">
+						<apex:outputLabel value="Select Class " for="apexClassMember"></apex:outputLabel>
+						<apex:selectList id="apexClassMember"
+							value="{!strSelectedClassId}" size="1">
+							<apex:selectOptions value="{!selectClassList}" />
+							<apex:actionSupport event="onchange" reRender="classDetails"
+								status="Processing1" action="{!retrieveClassInformation}" />
+						</apex:selectList>
+						<apex:actionStatus id="Processing1">
+							<apex:facet name="start">
+								<apex:image url="/img/loading.gif" />
+							</apex:facet>
+						</apex:actionStatus>
+					</apex:outputpanel>
+				</apex:pageBlockSectionItem>
+			</apex:pageBlockSection>
+			<apex:pageBlock id="classDetails">
+			<apex:pageBlockSection Title="Class Information" columns="2">
+
+				<apex:outputPanel id="Details" rendered="{!blnSectionDetails}">
+					<table style="Width:100%">
+
+						<tr>
+							<td style="text-align:center;"><b>Access Specifier</b></td>
+							<td style="text-align:center;"><b>Return Type</b></td>
+							<td style="text-align:center;"><b>Method Name</b></td>
+							<td style="text-align:center;"><b>Arguments</b></td>
+							<!--  <td style="text-align:center;"><b>Total Method</b></td>-->
+
+						</tr>
+						<tr>
+							<td><apex:dataList value="{!AccessSpecifiers}" var="c3">{!c3}</apex:dataList></td>
+							<td><apex:dataList value="{!ReturnTypes}" var="c1">{!c1}</apex:dataList></td>
+							<td><apex:dataList value="{!MethodNames}" var="c">{!c}</apex:dataList></td>
+							<td><apex:dataList value="{!Parameters}" var="c2">{!c2}</apex:dataList></td>
+							<td><apex:dataList value="{!methodSignature}" var="c3">{!c3}</apex:dataList></td>
+
+						</tr>
+					</table>
+
+
+				</apex:outputPanel>
+				
+				<apex:outputPanel id="VFPageDetails" rendered="{!blnVFSectionDetails}">
+				<table style="Width:100%">
+
+						<tr>
+							<td style="text-align:center;"><b>Controller</b></td>
+							<td style="text-align:center;"><b>Extension</b></td>
+							<td style="text-align:center;"><b>Action Methods</b></td>
+						</tr>
+						<td><apex:dataList value="{!Controller}" var="v">{!v}</apex:dataList></td>
+							<td><apex:dataList value="{!Extension}" var="v1">{!v1}</apex:dataList></td>
+							<td><apex:dataList value="{!Action}" var="v2">{!v2}</apex:dataList></td>
+						<tr>
+						</tr>
+						</table>
+					</apex:outputPanel>
+			</apex:pageBlockSection>
+			</apex:pageBlock>
+
+			<apex:pageBlockSection >
+				<div style="margin-left: 100px;">
+					<apex:commandButton value="Generate Apex Class" rerender="Url"
+						status="Create" action="{!createClass}" />
+					<apex:actionStatus id="Create" startText="Creating Test Class..."
+						 />
+				</div>
+			</apex:pageBlockSection>
+
+		</apex:pageBlock>
+		<apex:pageBlock id="Url">
+			<apex:pageBlockSection >
+				<apex:outputPanel id="NewRecordURL" rendered="{!blnURLLink}">
+					<apex:outputLink value="{!RecordURL}" id="theLink">Click here to view generated Test Class for {!strSelectedClassName}</apex:outputLink>
+				</apex:outputPanel>
+			</apex:pageBlockSection>
+		</apex:pageBlock>
+
+	</apex:form>
+</apex:page>

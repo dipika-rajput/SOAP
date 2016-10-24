@@ -1,0 +1,142 @@
+<apex:page standardController="Account"  extensions="SearchController"
+           recordSetVar="Account" sidebar="false" showHeader="false">
+ 
+    
+    
+   <!--  <script type="text/javascript" src="{!URLFOR($Resource.search_files, 'js/vfremoting.js')}"/>
+   <apex:includeScript value="{!URLFOR($Resource.search_files2, 'vfremoting.js')}"/>-->
+     <style>
+img {
+      border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+     max-width: 100%;
+     position: fixed;
+    }       
+</style>
+     <script type="text/javascript" src="{!URLFOR($Resource.search_files2, 'searchFiles/js/vfremoting.js')}"/> 
+     <img src="{!URLFOR($Resource.search_files2, 'searchFiles/img/header.png')}" alt="Norway" width="1500" height="100"/>
+     
+      <script type="text/javascript">
+
+   
+    function onEnter(e) {
+    if (window.event) {
+            var keynum;
+            if(window.event) 
+            {
+                keynum = e.keyCode;
+            }
+            
+            if(keynum == 13) 
+            { 
+                //alert("this is dosearch");
+                search();
+                return false;
+                //alert("this is after search");
+                
+            } 
+        }
+    }
+    
+    
+    <!--function for deleting account-->
+      function AccountDelete( IdChoosen)
+    {
+          alert("Account is deleted");
+           
+         Visualforce.remoting.Manager.invokeAction(
+            '{!$RemoteAction.SearchController.DeleteAccount}',IdChoosen,
+              function(result, event){
+              system.debug(result);
+            });
+    }
+    </script>   
+    
+    <apex:form >
+        <apex:actionFunction name="search" action="{!search}" reRender="searchResult,msgPanel">
+            
+        </apex:actionFunction>
+        <apex:pageBlock title="Accounts">
+            <apex:outputLabel value="View:"/>
+            <apex:selectList value="{!filterId}" size="1">
+                <apex:actionSupport event="onchange" rerender="accounts_table"/>
+                <apex:selectOptions value="{!listviewoptions}"/>
+            </apex:selectList>
+            <apex:pageBlock >
+                <!--this part is for alphabetical search-->
+                <div style="align:right;">
+                    <apex:repeat value="{!alphabet}" var="a">
+                        <apex:commandLink value="{!a}" action="{!refreshList2}" status="stat">
+                            <apex:param name="alpha" value="{!a}"/>
+                            </apex:commandLink>
+                        &nbsp;|&nbsp;
+                    </apex:repeat>
+                </div>
+                 
+                <apex:inputText value="{!searchstring}" label="Input"  onkeypress="return onEnter(event);"/>
+                <apex:outputPanel id="msgPanel">
+                <apex:pageMessages >  </apex:pageMessages>  
+                 </apex:outputPanel> 
+                <apex:commandButton value="Search records" action="{!search}" reRender="Block,msgPanel"/> 
+                
+                <apex:commandButton value="Clear records" action="{!clear}"/>  
+               
+                <apex:pageBlockButtons >
+                    <apex:commandButton value="Manage Contacts"/>
+                </apex:pageBlockButtons>
+                
+                <apex:pageBlockTable value="{!account}" var="a" rows="50" id="accounts_table" >
+                    <apex:column headerValue="Account Name" >
+                        <apex:outputLink value="/{!a.id}">{!a.Name}</apex:outputLink>   
+                    </apex:column>
+                    
+                    <apex:column headerValue="Email Address" >
+                        <apex:outputLink value="/{!a.id}">{!a.Email_ID__c}</apex:outputLink>   
+                    </apex:column>
+                    
+                    <apex:column headerValue="Phone Number" >
+                        <apex:outputLink value="/{!a.id}">{!a.Phone}</apex:outputLink>   
+                    </apex:column>
+                    
+                    <apex:column headerValue="Website" >
+                        <apex:outputLink value="/{!a.id}" target="_blank">{!a.Website}</apex:outputLink>   
+                    </apex:column>
+                    <!--column for deleting account it will call to javascript code onclick of this delete link-->
+                    <apex:column headerValue="Delete Option">
+                        <apex:outputLink onclick="AccountDelete('{!a.id}')">
+                            Delete
+                        </apex:outputLink>  
+                     </apex:column>
+                     <apex:column headerValue="Manage Contact Section">
+                       <apex:commandButton value="Manage Contacts" action="{!getContactsRecords}">
+                         <apex:param name="Get contacts" value="{!a.id}" assignTo="{!getContacts}"/>
+                         </apex:commandButton>
+                         </apex:column>  
+                     
+                  </apex:pageBlockTable>
+            </apex:pageBlock>
+         <apex:outputPanel id="Block">
+                       <apex:pageBlock id="searchResult" title="Search Result"  rendered="{!IF(accalpha.size > 0 || acc.size > 0, true, false)}"  > 
+           
+            <apex:pageblockTable value="{!accalpha}" var="a" >  
+                    <apex:column >  
+                        <apex:outputlink value="/{!a.id}">{!a.Name}</apex:outputlink>  
+                    </apex:column>
+                </apex:pageBlockTable>
+              
+                           
+                <apex:pageblockTable value="{!acc}" var="a">  
+                    <apex:column >  
+                        <apex:outputlink value="/{!a.id}">{!a.Name}</apex:outputlink>  
+                    </apex:column>
+                </apex:pageBlockTable>
+                
+            </apex:pageBlock>   
+           </apex:outputPanel>
+            
+        </apex:pageBlock>
+      
+    </apex:form>
+    <base target="_parent"/>
+</apex:page>

@@ -1,0 +1,53 @@
+<apex:page controller="googleApiqueryResultController" >
+<apex:form id="formid">
+  <apex:pageBlock >
+     
+        <apex:inputText value="{!SearchQueryString}" />
+         <apex:commandButton value="Search History" action="{!searchQuery}" reRender="searchresult1, formid"/>
+        
+        
+    
+      <apex:pageBlockTable value="{!emailHandler}" var="e">
+           <apex:column headerValue="Email Query" >
+                <apex:commandLink value="{!e.Email_Body__c}"  action="{!resultHandler}" reRender="searchresult2" >
+                    <apex:param name="queryId" assignTo="{!selectedQueryId}" value="{!e.Id}"/>
+                </apex:commandLink>   
+           </apex:column>
+      </apex:pageBlockTable>
+      </apex:pageBlock>
+      
+         <apex:outputPanel id="searchresult1" >
+           <apex:pageBlock title="Search Result From Google" id="sr1" rendered="True">
+              <apex:pageBlockTable value="{!WrapperLst2}" var="w" >
+                            <apex:column headerValue="Titles">
+                                 <apex:outputLink value="{!w.Titles2}">{!w.Titles2}</apex:outputLink>
+                            </apex:column>
+                            <apex:column headerValue="Links">
+                                 <apex:outputLink value="{!w.Links2}">{!w.Links2}</apex:outputLink>
+                            </apex:column>
+                            <apex:column headerValue="Snippets">
+                                 <apex:outputLink value="{!w.Snippets2}">{!w.Snippets2}</apex:outputLink>
+                            </apex:column>
+                   </apex:pageBlockTable>
+                   </apex:pageBlock>
+                   </apex:outputPanel>
+                   <apex:outputPanel id="searchresult2">
+                   <apex:pageBlock title="Search Result From Org"  rendered="True">
+
+                      <apex:pageblockTable value="{!lstwrapperList}" var="l">
+          
+                          <apex:column headerValue="Titles">
+                                 <apex:outputLink value="{!l.Titles}">{!l.Titles}</apex:outputLink>
+                          </apex:column>
+                          <apex:column headerValue="Links">
+                                 <apex:outputLink value="{!l.Links}">{!l.Links}</apex:outputLink>
+                          </apex:column>
+                          <apex:column headerValue="Snippets">
+                                 <apex:outputLink value="{!l.Snippets}">{!l.Snippets}</apex:outputLink>
+                          </apex:column>
+                          
+                      </apex:pageblockTable>
+     </apex:pageBlock>
+  </apex:outputPanel>
+  </apex:form>
+</apex:page>

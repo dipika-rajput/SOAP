@@ -1,0 +1,57 @@
+<apex:page standardController="Registration_of_Guest__c" extensions="Basic_Information_of_guestController">
+  
+
+ <script>
+            function validateRules()
+            {
+               
+                var emailPat= "^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$";
+                
+                var fname =  document.getElementById('{!$Component.formID.thePageBlock.mypgbs.theFieldInputFN}').value;
+                console.log('------fname ---------'+fname );
+                var emailCheck = document.getElementById('{!$Component.formID.thePageBlock.mypgbs.email}').value;
+                console.log('------emailCheck ---------'+emailCheck );
+                if(fname.length == 0)
+                {
+                    alert("Please enter a value for First Name");
+                   if(emailCheck.length == 0 )
+                      alert('email is blank or incorrect format');
+                    return false;
+                }
+                else
+                {
+                     
+                     alert('Please Check all information once again!!');
+                     alert('Are you sure you want to register');
+                     return True;
+                }
+                
+                 
+            }
+    </script>
+  <apex:form id="formID" >
+         <apex:pageBlock id="thePageBlock">
+          <apex:pageblocksection title="Basic Information of Guest" id="mypgbs">
+              <apex:inputfield value="{!Registration_of_Guest__c.First_Name__c}" required="True" id="theFieldInputFN"/>
+              <apex:inputfield value="{!Registration_of_Guest__c.Last_Name__c}" id="LN"/>
+              <apex:inputfield value="{!Registration_of_Guest__c.Email_ID__c}" id="email"/>
+              <apex:inputfield value="{!Registration_of_Guest__c.Registration_Status__c}" id="reg"/>
+              </apex:pageblocksection>
+              <apex:pageBlocksection title="Flight Arrival Details">
+                  <apex:inputfield value="{!Registration_of_Guest__c.Flight_Arrival_Number__c}" id="FAN"/>
+                  <apex:inputfield value="{!Registration_of_Guest__c.Flight_Arrival_Code__c}" id="FAC"/>
+                  <apex:inputfield value="{!Registration_of_Guest__c.Flight_Arrival_Date_Time__c}" id="FAD"/>
+                  
+                  </apex:pageBlocksection>
+                  <apex:pageBlocksection Title="Flight Departure Details">
+                  <apex:inputfield value="{!Registration_of_Guest__c.Flight_Departure_No__c}" id="FDN"/>
+                  <apex:inputfield value="{!Registration_of_Guest__c.Flight_Departure_Code__c}" id="FDC"/>
+                  <apex:inputfield value="{!Registration_of_Guest__c.Flight_Departure_Date_Time__c}" id="FDT"/>
+               </apex:pageBlocksection>
+               <apex:pageBlockButtons >
+               <apex:commandButton value="Register" action="{!saveRec}" onclick="validateRules();"/>
+               <apex:commandButton value="Cancel"/>
+               </apex:pageBlockButtons>
+      </apex:pageBlock>
+  </apex:form>
+</apex:page>

@@ -1,0 +1,6 @@
+<apex:page controller="RemotingController">
+<apex:form >
+
+
+</apex:form>
+</apex:page>

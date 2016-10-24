@@ -1,0 +1,15 @@
+<apex:page standardController="Account" extensions="DisplayErrorMessageInVfCls">
+ <apex:form >
+   <apex:pageblock >
+      <apex:pageMessages id="showmsg"></apex:pageMessages>
+         <apex:panelGrid columns="2">
+           Account Name: <apex:inputText value="{!acc.name}"/>
+           Account Number: <apex:inputText value="{!acc.AccountNumber}"/>
+           Account Phone: <apex:inputText value="{!acc.phone}"/>
+           Account Site: <apex:inputText value="{!acc.site}"/>
+           Account Industry: <apex:inputText value="{!acc.industry}"/>
+           <apex:commandButton value="Save Details" action="{!save}" style="width:90px" rerender="showmsg"/>
+         </apex:panelGrid>
+    </apex:pageblock>
+ </apex:form>
+</apex:page>

@@ -1,0 +1,12 @@
+<apex:page controller="Pagin_alpha">
+<apex:form >
+<div style="align:right;">
+<apex:repeat value="{!alphabet}" var="a">
+<apex:commandLink value="{!a}" action="{!refreshList2}" rerender="form"  status="stat">
+<apex:param name="alpha" value="{!a}"/>
+</apex:commandLink>
+&nbsp;|&nbsp;
+</apex:repeat>
+</div>
+</apex:form>
+</apex:page>

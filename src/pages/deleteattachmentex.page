@@ -1,0 +1,7 @@
+<apex:page standardController="Account">
+ <apex:repeat value="{!Account.attachments}" var="attachment" rows="1" first="0"> 
+  <h1>{!attachment.Name}</h1><br/>
+    
+<a href="{!attachment.ID}" onclick="confirmation4()">Delete_Attachment</a>
+
+</apex:repeat></apex:page>

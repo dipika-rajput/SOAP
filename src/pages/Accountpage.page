@@ -1,0 +1,12 @@
+<apex:page controller="UpdateAccountController"
+           tabStyle="Account">
+  <apex:sectionHeader title="Update Account" subtitle="Step 1 of 3" />
+ <apex:form >
+ <apex:pageBlock title="Update Account Information">
+ <apex:facet name="footer">
+     <apex:commandButton action="{!step2}" value="Next" styleClass="btn"/>
+     </apex:facet>
+ </apex:pageBlock>
+ 
+ </apex:form>
+</apex:page>

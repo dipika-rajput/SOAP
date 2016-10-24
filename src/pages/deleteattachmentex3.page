@@ -1,0 +1,16 @@
+<apex:page Standardcontroller="Account">
+<apex:dataTable value="{!account}" var="Account" cellPadding="4" border="1">
+<apex:column >
+<apex:facet name="header">Attachment</apex:facet>
+<table border = '0' cellspacing="0" cellpadding="0">
+<tr><td><b><center><apex:outputLink value="/apex/AttachmentUpload?id={!Account.id}" rendered="
+{!!(Account.id == null)}">Upload</apex:outputLink></center></b><br/></td>
+<td><apex:repeat var="attach" value="{!Account.Attachments}">
+<apex:outputLink value="/servlet/servlet.FileDownload?file={!attach.id}" target="_blank">
+                                {!attach.Name}
+</apex:outputLink>&nbsp;&nbsp;&nbsp;<b><a href="javascript:if (window.confirm('Are you sure?'))DeleteFile('{!attach.Id}');" 
+style="font-weight:bold">Del</a></b><br/></apex:repeat>
+ </td></tr></table>
+ </apex:column>
+ </apex:dataTable>
+                </apex:page>

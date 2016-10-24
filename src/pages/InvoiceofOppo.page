@@ -1,0 +1,53 @@
+<apex:page StandardController="Opportunity" renderas="pdf" showHeader="False">
+    <apex:form >
+        <center>
+            <h1>Invoice</h1>
+        </center>
+        <h3>{!Opportunity.Account.Company__c}
+        </h3>
+        <p>
+            <Strong>Billed To :  </Strong>
+        </p>
+        <u>{!Opportunity.Account.Name}
+        </u>
+        
+        <apex:pageBlock >
+            <apex:outputText value="{!opportunity.account.billingStreet}" style="text-align:right"/><br/>
+            <apex:outputText value="{!opportunity.account.billingcity}"/>
+            <apex:outputText value="{!opportunity.account.BillingPostalCode}"/><br/>
+            <apex:outputText value="{!opportunity.account.phone}"/>
+        </apex:pageBlock>
+        <h3>Product Details : 
+        </h3>
+        <apex:pageBlock >
+            <apex:pageBlockTable value="{!opportunity.opportunityLineItems}" var="prd">
+                <apex:column value="{!prd.ServiceDate}" />
+                <apex:column value="{!prd.ListPrice}"/>
+                <apex:column value="{!prd.ProductCode}"/>
+                <apex:column value="{!prd.Quantity}"/>
+                <apex:column value="{!prd.UnitPrice}"/>
+                <apex:column value="{!prd.TotalPrice}"/>
+            </apex:pageBlockTable>
+        </apex:pageBlock>  
+        <br/><br/>
+        <p>
+            <Strong>Total Amount : 
+            </Strong>
+        {!Opportunity.Amount}<br/></p>
+        <br/><br/>
+        <p>
+            <strong>
+                <em>Thank you for your Business!
+                </em>
+            </strong>
+        <p>
+            <em>if you have any questions about this invoice, please contact<br/><br/>
+                <u> {!Opportunity.Name}
+                </u><br/>{!Opportunity.Account.Phone}<br/>
+                <u>{!Opportunity.Account.Email__c}||{!Opportunity.Account.Website}
+                </u><br/>
+                {!Opportunity.Account.BillingStreet}<br/>{!Opportunity.Account.BillingCity}{!opportunity.account.BillingPostalCode}<br/><br/>
+            </em></p>
+        </p>
+    </apex:form>
+</apex:page>

@@ -1,0 +1,53 @@
+<apex:page standardController="Account"  extensions="SearchController" recordSetVar="Account" sidebar="false" showHeader="false">
+    <apex:form >
+    
+        <apex:pageBlock title="Accounts">
+              <apex:outputLabel value="View:"/>
+              <apex:selectList value="{!filterId}" size="1">
+                <apex:actionSupport event="onchange" rerender="accounts_table"/>
+                <apex:selectOptions value="{!listviewoptions}"/>
+              </apex:selectList>
+            <apex:pageBlock >
+            
+             
+                
+                <apex:inputText value="{!searchstring}" label="Input"/>   
+                <apex:commandButton value="Search records" action="{!search}"/>  
+                 <apex:commandButton value="Clear records" action="{!clear}"/>  
+                <apex:pageBlockButtons >
+                 
+                 <apex:commandButton value="Manage Contacts"/>
+                 </apex:pageBlockButtons>
+                 
+                 <apex:pageBlockTable value="{!account}" var="a" rows="50" id="accounts_table" >
+                    <apex:column headerValue="Account Name" >
+                    <apex:outputLink value="/{!a.id}">{!a.Name}</apex:outputLink>   
+                    </apex:column>
+                    
+                    <apex:column headerValue="Email Address" >
+                    <apex:outputLink value="/{!a.id}">{!a.Email_ID__c}</apex:outputLink>   
+                    </apex:column>
+                   
+                   <apex:column headerValue="Phone Number" >
+                    <apex:outputLink value="/{!a.id}">{!a.Phone}</apex:outputLink>   
+                    </apex:column>
+                    
+                    <apex:column headerValue="Website" >
+                    <apex:outputLink value="/{!a.id}" target="_blank">{!a.Website}</apex:outputLink>   
+                    </apex:column>
+                </apex:pageBlockTable>
+                 </apex:pageBlock>
+                 
+                 <apex:pageBlock title="Search Result">  
+                <apex:pageblockTable value="{!acc}" var="a">  
+                <apex:column >  
+                <apex:outputlink value="/{!a.id}">{!a.Name}</apex:outputlink>  
+                 </apex:column>  
+                  
+                </apex:pageBlockTable>     
+               </apex:pageBlock>   
+                 
+        </apex:pageBlock>
+    </apex:form>
+    <base target="_parent"/>
+</apex:page>

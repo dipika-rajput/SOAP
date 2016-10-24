@@ -1,0 +1,73 @@
+<apex:page controller="QueryBuilderusingDynamicApex">
+    <apex:form id="od">
+    	<apex:pageBlock >
+        		<apex:pageBlockSection >
+            			<apex:pageBlockSectionItem >
+                            <apex:outputLabel value="Select Object:-"></apex:outputLabel>
+                    			<apex:selectList size="1" value="{!selectedObj}">
+                                    	<apex:selectOptions value="{!objects}"/>
+                                        	<apex:actionSupport event="onchange" action="{!Details}" reRender="od"/>
+                                </apex:selectList>
+                    	</apex:pageBlockSectionItem>
+                   		<apex:pageBlockSectionItem >
+                           <!-- <apex:outputLabel value="{!objDescription}" />-->
+                        </apex:pageBlockSectionItem>
+                    	<apex:pageBlockSectionItem >
+                            <apex:panelGrid columns="3" >
+                            	<apex:panelGroup style="width:40%">
+                                    <apex:outputLabel value="Select Fields:-"/>
+                                	<apex:selectList value="{!sfields}" multiselect="True" style="width:120px;height:150px;">
+                                        <apex:selectOptions value="{!fnsOptions}"/>
+                                    </apex:selectList>
+                                 </apex:panelGroup>
+                                
+                                <apex:panelGroup >
+                                		<table height="120px">
+                                        		<tr><td><apex:commandButton value="add"
+                                                                            action="{!addFields}"
+                                                                            style="width:80px"
+                                                                            reRender="od"/></td></tr>
+                                            	<tr><td><apex:commandButton value="remove"
+                                                                            action="{!removeFields}"
+                                                                            style="width:80px"
+                                                                            reRender="od"/></td></tr>
+                                    	</table>
+                                </apex:panelGroup>
+                                		
+                                <apex:panelGroup style="width:20%;height:120px;">
+                                    <apex:outputLabel value="remove Fields:-"/>
+                                    <apex:selectList value="{!rfields}" multiselect="True" style="width:120px;height:150px;">
+                                        <apex:selectOptions value="{!fsOptions}"/>
+                                    </apex:selectList>
+                                </apex:panelGroup>
+                            </apex:panelGrid>
+                    	</apex:pageBlockSectionItem>
+                    	
+                    <apex:pageBlockSectionItem >
+                           <apex:pageBlockTable value="{!myData}" var="a"> 
+                               <apex:repeat value="{!myFields}" var="b">
+                                   <apex:column value="{!a[b]}"/>
+                               </apex:repeat>
+                           </apex:pageBlockTable>
+                    </apex:pageBlockSectionItem>
+                  
+            	</apex:pageBlockSection>
+          	<apex:pageBlockSection > 
+                <apex:selectRadio label="Order:-" value="{!SortingOrder}">
+                <apex:selectOptions value="{!OptionsSorting}"/>
+                <apex:actionsupport event="onchange" action="{!actionSave}"/>
+            </apex:selectRadio>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection >
+             <apex:selectList id="sel3" value="{!limitSize}" label="LIMIT:-" size="1">
+                    <apex:selectOptions value="{!LimitValue}" />
+                        <apex:actionsupport event="onchange" action="{!actionlimit}"/>
+                </apex:selectList>
+            </apex:pageBlockSection>
+            <apex:commandButton value="Generate Query" action="{!querymyData}" reRender="od"/>
+            {!query}
+           
+             
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

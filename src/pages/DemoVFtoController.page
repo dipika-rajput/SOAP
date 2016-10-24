@@ -1,0 +1,13 @@
+<apex:page controller="passparamController">
+    <!-- Pass parameters from visualforce page to controller -->
+    <apex:form >
+            <apex:pageblock >
+                  Input Here <apex:inputText value="{!myinput}"/>
+                 <apex:commandButton value="Submit" reRender="outputID" action="{!MyMethode}"/>
+            </apex:pageblock>
+            <apex:pageblock >
+                 <b>Output here = </b><apex:outputText value="{!myoutput}" id="outputID">
+                 </apex:outputText>
+            </apex:pageblock>
+    </apex:form>
+</apex:page>

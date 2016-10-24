@@ -1,0 +1,5 @@
+<apex:page >
+<apex:form >
+  <apex:iframe src="/00O28000008Ax2S"  width="100%"/>
+  </apex:form>  
+</apex:page>

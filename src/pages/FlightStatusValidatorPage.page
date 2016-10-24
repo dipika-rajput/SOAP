@@ -1,0 +1,39 @@
+<apex:page controller="FlightStatusValidatorController">
+<apex:form >
+     <apex:pageBlock title="Flight Status Information" >
+         <apex:pageBlocksection title="enter Flight Details to get Validate From other Org:-">
+            
+             <apex:inputText value="{!airlinecode}" label="Airline Code:-"/>
+             <apex:inputText value="{!FlightNum}" label="Flight Number:-"/>
+             <apex:inputtext value="{!ArrivalDate}" label="Arrival Date:-"/>
+             <apex:inputText value="{!departureDate}" label="Departure Date:-"/>
+            
+         </apex:pageBlocksection>
+         <apex:commandButton value="Validate" action="{!callflightGet}" reRender="validateResult"/>
+     </apex:pageBlock>
+     <apex:pageblock title="Flight Details:-" id="validateResult">
+         <apex:pageblocktable value="{!listofWrapper}" var="l">
+         <apex:column headerValue="Airport">
+               <apex:outputLink value="{!l.Airport}">{!l.Airport}</apex:outputLink>
+         </apex:column>
+         <apex:column headerValue="Arrivalairportcode">
+               <apex:outputLink value="{!l.Arrivalairportcode}">{!l.Arrivalairportcode}</apex:outputLink>
+         </apex:column>
+         <apex:column headerValue="Arrivalterminal">
+               <apex:outputLink value="{!l.Arrivalterminal}">{!l.Arrivalterminal}</apex:outputLink>
+         </apex:column>
+         <apex:column headerValue="Departureairportcode">
+               <apex:outputLink value="{!l.Departureairportcode}">{!l.Departureairportcode}</apex:outputLink>
+         </apex:column>
+         <apex:column headerValue="DepartureTerminal">
+               <apex:outputLink value="{!l.Departureerminal}">{!l.Departureerminal}</apex:outputLink>
+         </apex:column>
+         <apex:column headerValue="Airline">
+               <apex:outputLink value="{!l.Airline}">{!l.Airline}</apex:outputLink>
+         </apex:column>
+   
+         
+         </apex:pageblocktable>
+     </apex:pageblock>
+     </apex:form>
+</apex:page>

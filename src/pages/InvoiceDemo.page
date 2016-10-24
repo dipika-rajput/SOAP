@@ -1,0 +1,128 @@
+<apex:page standardController="Opportunity" showHeader="FALSE" standardStylesheets="false" renderas="pdf">
+<head>
+<style type="text/css">
+@page{
+    size: letter;
+    margin: 10%;
+    @top-center {
+        content: "Invoice Date: {!MONTH(TODAY())}/{!DAY(TODAY())}/{!YEAR(TODAY())}";
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: 12px;
+            font-weight: bolder;
+    }
+    @top-right {
+        content: "Invoice #: {!opportunity.ID_for_invoices__c}";
+        font-family: Helvetica, Arial, sans-serif;
+        font-size: 12px;
+        font-weight: bolder;
+    }
+    @top-left {
+        content: "INVOICE";
+        font-family: Helvetica, Arial, sans-serif;
+        font-size: 12px;
+        font-weight: bolder;
+    }
+    @bottom-left {
+        content: "";
+        font-family: Helvetica, Arial, sans-serif;
+        font-size: 10px;
+    }
+    @bottom-right {
+        content: "Page " counter(page) " of " counter(pages);
+        font-family: Helvetica, Arial, sans-serif;
+        font-size: 10px;
+    }
+}
+body {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 11px;
+}
+table {
+    font-family: Helvetica, Arial, sans-serif;  
+}
+td {
+    border: 1px solid #000000;  
+}
+.tablelabel {
+    background: #000000;
+    color: #FFFFFF;
+    padding: 5px;
+    font-weight: bolder;
+}
+.tableheader {
+    font-weight: bolder;
+}
+.invisiblecell {
+    border-left: 0;
+    border-bottom: 0;
+    border-top: 0;
+}
+span#warningtext{
+    font-size: 80%;
+    background: #FFF000;
+    float: left;
+    padding: 3px;
+    margin-right: 8px;
+    width: 90px;
+    align: middle;
+    text-align: right;
+}
+
+</style>
+</head>
+
+<p><strong>Billed To:</strong></p>
+<p>{!opportunity.Account.Name}<br/>
+<apex:outputText value="{! IF(ISBLANK(opportunity.Account.BillingStreet),"", opportunity.Account.BillingStreet &"<br/>")}" escape="false"/>
+{!opportunity.Account.BillingCity}, {!opportunity.Account.BillingState} {!opportunity.Account.BillingPostalCode}<br/>
+{!opportunity.Account.BillingCountry}
+</p>
+
+<!-- OUTPUT INVOICE COMMENT, IF ANY  -->
+<apex:outputpanel rendered="{! NOT(ISBLANK(opportunity.invoice_comment__c))}">
+<p><strong>Comment:</strong> {!opportunity.invoice_comment__c}</p>
+</apex:outputpanel>
+
+<!-- OUTPUT PROMOTION DESCRIPTION, IF PROMOTION APPLIED -->
+<apex:outputpanel rendered="{! NOT(ISBLANK(opportunity.promotion_code__c))}">
+<p><strong>Promotion:</strong> {!opportunity.promotion_code__c}</p>
+</apex:outputpanel>
+
+<!-- OUTPUT ORDERED ITEMS TABLE -->
+<table class="tables" cellpadding="6" cellspacing="0" width="100%">
+<tr><td colspan="5" class="tablelabel">Order</td></tr>
+<tr class="tableheader"><td>Item Description</td><td align="right">List Price</td><td align="right">Sale Price</td><td align="center">Quantity</td><td align="right">Amount</td></tr>
+<tr>
+</tr>
+
+<apex:repeat var="lineitem" value="{!opportunity.OpportunityLineItems}">
+<tr>
+<td align="left" width="50%">{!lineitem.PricebookEntry.Product2.Name}</td>
+<td align="right"><apex:outputfield value="{!lineitem.ListPrice}" /></td>
+<td align="right"><apex:outputfield value="{!lineitem.UnitPrice}" /></td>
+<td align="center">{!lineitem.Quantity}</td>
+<td align="right"><apex:outputfield value="{!lineitem.TotalPrice}" /></td>
+</tr>
+</apex:repeat>
+<tr><td class="invisiblecell"></td><td colspan="3" class="tablelabel">Order Total
+</td><td class="tablelabel" align="right"><apex:outputfield value="{!opportunity.Amount}" /></td></tr>
+</table>
+
+<p>&nbsp;</p>
+<p><strong>To Pay by Credit Card</strong><br/>
+We are available to take credit card payments over the phone between 8am and 5pm ET at XXX-XXX-XXXX.</p>
+
+<p>
+<strong>To Pay by Check</strong> <br/>
+Make checks payable to “XXXXX”, include a memo that the amount is for "XXXXX" and mail to:</p>
+
+
+<p><span id="warningtext">Please note our<br />new address<br />for payments</span>AASHE<br />
+PO Box XXXXXXX<br />
+Philadelphia, PA XXXXXX 
+</p>
+
+<p><strong><em>Thank you!</em></strong>
+</p>
+
+</apex:page>

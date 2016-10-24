@@ -1,0 +1,37 @@
+<apex:page Standardcontroller="Event_Management__c" extensions="EventManagementController">
+
+   
+  <apex:form >
+  <apex:pageBlock title="Select Criteria for Displaying Events">
+      <apex:outputLabel value="Start Date :- "/>
+      <apex:inputField value="{!Event_Management__c.Start_Date__c}"/><br/><br/>
+      <apex:outputLabel value="End Date:- "/>
+      <apex:inputField value="{!Event_Management__c.End_Date__c}"/><br/><br/>
+ <apex:commandButton value="Apply" action="{!eventLst}" reRender="Section" >
+         
+          </apex:commandButton>
+          
+  </apex:pageBlock>
+
+<apex:pageBlock title="Events are Displayed according to Criteria" id="Section">
+  <apex:pageblocksection >
+   <apex:pageblockSectionItem >
+        <apex:outputLabel value="Event List:-"/>
+            <apex:selectList size="1" value="{!selectedEvent}" id="Event">
+                      <apex:selectoptions value="{!EventObj}"/>
+                        <apex:actionSupport event="onchange" />
+            </apex:selectList>
+            </apex:pageblocksectionItem>
+            <apex:pageBlockSectionItem >
+                <apex:outputLabel value="Group Code:-"/>
+            <apex:selectList size="1" value="{!eventLst}" id="Group">
+                      <apex:selectoptions value="{!GroupCodeObj}"/>
+                        <apex:actionSupport event="onchange" action="{!redirect}" />
+            </apex:selectList>
+            </apex:pageBlockSectionItem>
+            </apex:pageblocksection>
+            </apex:pageBlock>
+             
+            
+  </apex:form> 
+</apex:page>

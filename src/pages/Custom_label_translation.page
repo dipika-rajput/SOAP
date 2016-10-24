@@ -1,0 +1,19 @@
+<apex:page controller="custom_label_translation_Controller">
+<apex:form >
+<apex:pageBlock >
+<h1>Custom labels:-</h1>
+
+
+<apex:outputLabel value="{!$Label.Translate_according_to_your_choice}"/><br/><br/>
+<apex:actionFunction name="rerenderStates" rerender="Lang" action="{!changeLanguage}" >
+<apex:param name="firstParam" assignTo="{!language}" value="" />
+</apex:actionFunction>
+<apex:selectList id="Lang" multiselect="false" size="1" 
+value="{!language}" onChange="rerenderStates(this.value)" >
+Language Selection:- 
+<apex:selectOptions value="{!LanguageSelected}">
+</apex:selectOptions> 
+</apex:selectList>
+</apex:pageBlock>
+</apex:form>
+</apex:page>

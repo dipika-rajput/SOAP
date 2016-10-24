@@ -1,0 +1,12 @@
+<apex:page Controller="MyCustomControllerDemo">
+<apex:form >
+<apex:pageBlock title="Hello {!$User.FirstName}">
+ hello this is your new page with controller {!name} and account 
+ name is {!account.name}.
+ <apex:inputField value="{!account.name}"/>
+ <apex:inputField value="{!account.Website_Domain__c}"/>
+ </apex:pageBlock>
+ <apex:commandButton value="Save" action="{!save}"/>
+</apex:form>
+
+</apex:page>

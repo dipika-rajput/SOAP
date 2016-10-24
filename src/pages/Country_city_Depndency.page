@@ -1,0 +1,10 @@
+<apex:page StandardController="Account">
+  <apex:form >
+  <apex:pageBlock >
+   <apex:pageBlockSection title="My Dependent Piclist" columns="2">
+   <apex:inputField value="{!Account.Countary__c}" />
+  <apex:inputField value="{!Account.City__c}"/>
+  </apex:pageBlockSection>
+  </apex:pageBlock>
+  </apex:form> 
+</apex:page>

@@ -1,0 +1,68 @@
+<apex:page StandardController="Account" extensions="Account_Details_Handler">
+   <apex:form >
+       <apex:pageBlock title="Hello {!$User.FirstName}!">
+        You are viewing the {!account.name} Account Details.
+    </apex:pageBlock>
+   <apex:pageBlock >      
+ <apex:pageBlockSection title="My Content Section" columns="1">
+   <apex:detail subject="{!account.id}"   relatedList="false" title="false"/> 
+    </apex:pageBlockSection>
+
+   <apex:pageBlockButtons >
+   <apex:commandButton action="{!edit}" value="Edit_Detail"/>
+    
+     <apex:commandButton action="{!dosubmit}" value="Next!!">
+     <apex:param name="AccountID" value="{!account.id}" assignTo="{!AccID}"/>
+     </apex:commandButton>
+      </apex:pageBlockButtons>
+   
+     
+   <apex:pageBlockSection title="Account Attachments" columns="2" id="thedatatable">
+   
+   <apex:dataTable value="{!account}" var="Account" cellPadding="4" border="1">
+<apex:column >
+     <apex:facet name="header">Attachment</apex:facet>
+       <style>
+        table 
+        {
+             border-collapse: collapse;
+        }
+        th 
+        {
+            height: 10px;
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+             
+        td
+        {
+            padding: 10px;
+            text-align: left;
+            width:100%;
+            border-bottom: 1px solid #ddd;
+                  
+        }
+             
+        tr:nth-child(even){background-color: #f2f2f2}
+        </style>
+
+           <table border = '0' cellspacing="1" cellpadding="1" width = "1000" >
+           <tr>
+           <th>Delete link</th>
+           <th>Attachment File Name</th></tr>
+         <tr><td width = "100%"><apex:repeat var="attach" value="{!Account.Attachments}">
+                           
+                         <apex:commandLink action="{!deleteLink}" value="Delete_Link"  rerender="thedatatable">
+                         <apex:param name="contIdParam" value="{!attach.Id}" assignTo="{!IdChoosen}"/>
+                         </apex:commandLink>
+                         <apex:outputLink value="{!attach.id}" target="_blank">
+                                {!attach.Name}
+                         </apex:outputLink><br/>
+                         </apex:repeat></td></tr></table>
+                         </apex:column>
+                         </apex:dataTable>
+                         </apex:pageBlockSection>
+  </apex:pageBlock>
+   </apex:form>  
+</apex:page>

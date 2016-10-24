@@ -1,0 +1,8 @@
+<apex:page controller="refreshdemoController">
+<apex:form >
+  <apex:commandButton value="Increament" action="{!increament}" reRender="theOutputpanel"/>
+  <apex:outputPanel id="theOutputpanel">
+<apex:outputtext value="you have clciked {!counter}times"></apex:outputtext>
+</apex:outputPanel>
+</apex:form>
+</apex:page>
