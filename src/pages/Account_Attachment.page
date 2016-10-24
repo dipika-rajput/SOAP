@@ -11,16 +11,9 @@
 
       <apex:pageBlockSection showHeader="false" columns="2" id="block1">
 
-        <apex:pageBlockSectionItem >
-          <apex:outputLabel value="File Name" for="fileName"/>
-          <apex:inputText value="{!attachment.name}" id="fileName"/>
-        </apex:pageBlockSectionItem>
+      
 
-        <apex:pageBlockSectionItem >
-          <apex:outputLabel value="File" for="file"/>
-          <apex:inputFile value="{!attachment.body}" filename="{!attachment.name}" id="file"/>
-        </apex:pageBlockSectionItem>
-
+    
         <apex:pageBlockSectionItem >
           <apex:outputLabel value="Description" for="description"/>
           <apex:inputTextarea value="{!attachment.description}" id="description"/>
